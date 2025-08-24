@@ -67,7 +67,17 @@ final class CreateCharacterViewController: UIViewController {
 
         output.presentPopUp
             .bind(with: self) { owner, nextVC in
-                owner.present(nextVC, animated: true)
+                guard let popup = nextVC as? CreateCharacterPopUpViewController else { return }
+                
+                popup.startButtonTapped
+                    .bind(with: self) { owner, data in
+                        let mainVC = MainViewController()
+                        mainVC.configure(data: data)
+                        owner.navigationController?.pushViewController(mainVC, animated: true)
+                    }
+                    .disposed(by: owner.disposeBag)
+
+                owner.present(popup, animated: true)
             }
             .disposed(by: disposeBag)
     }

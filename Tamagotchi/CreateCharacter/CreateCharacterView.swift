@@ -13,7 +13,6 @@ class CreateCharacterView: BaseView {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 100, height: 140)
         layout.scrollDirection = .vertical
-
         layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .clear

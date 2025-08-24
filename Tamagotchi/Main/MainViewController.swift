@@ -18,4 +18,10 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
 
     }
+
+    func configure(data: TamagochiData) {
+        rootView.bubbleMessage.text = "안녕하세요" // 추후 변경필요
+        rootView.nameLabel.text = data.name
+        rootView.characterImage.image = UIImage(named: data.iamgeName)
+    }
 }
