@@ -32,6 +32,7 @@ class MainViewController: UIViewController {
         rootView.nameLabel.text = data.name
         rootView.characterImage.image = UIImage(named: data.iamgeName)
 
+        updateStandartMessage()
         updateLv()
         updateImage()
         updateStatusLabel()
@@ -53,8 +54,8 @@ class MainViewController: UIViewController {
                 }
                 data.rice += count
                 owner.currentData = data
-                owner.rootView.bubbleMessage.text = "밥 맛있어요!"
 
+                owner.updateStandartMessage()
                 owner.updateLv()
                 owner.updateImage()
                 owner.updateStatusLabel()
@@ -76,8 +77,8 @@ class MainViewController: UIViewController {
                 }
                 data.water += count
                 owner.currentData = data
-                owner.rootView.bubbleMessage.text = "물 맛있어요!"
 
+                owner.updateStandartMessage()
                 owner.updateLv()
                 owner.updateImage()
                 owner.updateStatusLabel()
@@ -93,6 +94,9 @@ class MainViewController: UIViewController {
     private func updateLv() {
         guard var data = currentData else { return }
         let lv = min(10, max(1,(Int((Double(data.rice) / 5.0) + (Double(data.water) / 2.0)) / 10)))
+        if data.lv != lv {
+            updateLvMessage()
+        }
         data.lv = lv
         currentData = data
     }
@@ -102,6 +106,20 @@ class MainViewController: UIViewController {
         let newImageString = "\(data.id)-\(data.lv)"
         currentData?.iamgeName = newImageString
         rootView.characterImage.image = UIImage(named: newImageString)
+    }
+
+    private func updateStandartMessage() {
+        guard let data = currentData else { return }
+        let messages = ["*#님, 좋은 하루에요", "*#님 밥 주세요", "좋은 하루에요 *#님"]
+        var randomMessage = messages.randomElement()
+        randomMessage?.replace("*#", with: data.owner)
+        rootView.bubbleMessage.text = randomMessage
+    }
+
+    private func updateLvMessage() {
+        guard let data = currentData else { return }
+        let message = "밥과 물을 잘먹었더니 레벨업 했어요 고마워요 \(data.owner)님"
+        rootView.bubbleMessage.text = message
     }
 
     func configureNavigation() {

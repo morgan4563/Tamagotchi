@@ -29,6 +29,7 @@ final class CreateCharacterViewModel {
 		let vc = PublishRelay<UIViewController>()
 
         input.itemSelected
+            .filter{ $0.id != 0 }
             .bind(with: self) { owner, value in
                 let nextVC = CreateCharacterPopUpViewController()
                 nextVC.configure(data: value)
