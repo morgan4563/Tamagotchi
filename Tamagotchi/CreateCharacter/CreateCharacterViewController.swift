@@ -12,6 +12,7 @@ import RxCocoa
 final class CreateCharacterViewController: UIViewController {
     let disposeBag = DisposeBag()
     let rootView = CreateCharacterView()
+    let viewModel = CreateCharacterViewModel()
 
     override func loadView() {
         view = rootView
@@ -50,6 +51,10 @@ final class CreateCharacterViewController: UIViewController {
     }
 
     private func bind() {
+        let input = CreateCharacterViewModel.Input(itemSelected: rootView.collectionView.rx.modelSelected(TamagochiData.self))
+
+        let output = viewModel.transform(input: input)
+
         items
             .bind(to: rootView.collectionView.rx.items(
                 cellIdentifier: CharacterCollectionViewCell.identifier,
@@ -59,13 +64,9 @@ final class CreateCharacterViewController: UIViewController {
             }
             .disposed(by: disposeBag)
 
-        rootView.collectionView.rx.modelSelected(TamagochiData.self)
-            .bind(with: self) { owner, value in
-                let nextVC = CreateCharacterPopUpViewController()
-                nextVC.configure(data: value)
-                nextVC.modalPresentationStyle = .overFullScreen
-                nextVC.modalTransitionStyle = .crossDissolve
 
+        output.presentPopUp
+            .bind(with: self) { owner, nextVC in
                 owner.present(nextVC, animated: true)
             }
             .disposed(by: disposeBag)
