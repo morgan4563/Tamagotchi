@@ -19,6 +19,14 @@ class MainViewController: UIViewController {
         view = rootView
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print(#function)
+        guard let data = UserDefaults.standard.loadTamagochi() else { return }
+        configure(data: data)
+        navigationItem.title = "\(currentData?.owner ?? "")님의 다마고치"
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,7 +35,7 @@ class MainViewController: UIViewController {
     }
 
     func configure(data: TamagochiData) {
-        currentData = data
+    	currentData = data
         rootView.bubbleMessage.text = "안녕하세요" // 추후 변경필요
         rootView.nameLabel.text = data.name
         rootView.characterImage.image = UIImage(named: data.iamgeName)

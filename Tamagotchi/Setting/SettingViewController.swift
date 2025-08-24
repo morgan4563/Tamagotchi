@@ -19,15 +19,23 @@ class SettingViewController: UIViewController {
     private let rootView = SettingView()
     private let disposeBag = DisposeBag()
 
-    private let ownerName = BehaviorRelay<String>(value: "고래밥")
     private let cellData = BehaviorRelay<[CellData]>(value: [
-        CellData(imageName: "pencil", title: "내 이름 설정하기", subtitle: "고래밥"),
+        CellData(imageName: "pencil", title: "내 이름 설정하기", subtitle: "대장"),
         CellData(imageName: "moon.fill", title: "다마고치 변경하기", subtitle: nil),
         CellData(imageName: "arrow.clockwise", title: "데이터 초기화", subtitle: nil),
     ])
 
     override func loadView() {
         view = rootView
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let _ = UserDefaults.standard.loadTamagochi() {
+            var newData = cellData.value
+            newData[0] = CellData(imageName: "pencil", title: "내 이름 설정하기", subtitle: UserDefaults.standard.loadTamagochi()?.owner ?? "대장")
+            cellData.accept(newData)
+        }
     }
 
     override func viewDidLoad() {

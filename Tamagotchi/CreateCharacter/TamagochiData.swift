@@ -7,10 +7,10 @@
 
 struct TamagochiData: Codable {
     var id: Int
-    let name: String
+    var name: String
     var iamgeName: String
     let description: String
-    let owner: String
+    var owner: String
     var lv: Int
     var rice: Int
     var water: Int

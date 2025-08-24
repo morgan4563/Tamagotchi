@@ -74,13 +74,14 @@ final class CreateCharacterViewController: UIViewController {
                         let mainVC = MainViewController()
                         if var savedData = UserDefaults.standard.loadTamagochi() {
                             savedData.id = data.id
+                            savedData.name = data.name
                             UserDefaults.standard.saveTamagochi(savedData)
                             mainVC.configure(data: savedData)
                         } else {
                             UserDefaults.standard.saveTamagochi(data)
                             mainVC.configure(data: data)
                         }
-                        
+
                         owner.navigationController?.pushViewController(mainVC, animated: true)
                     }
                     .disposed(by: owner.disposeBag)
