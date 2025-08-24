@@ -18,9 +18,9 @@ final class CreateCharacterViewController: UIViewController {
     }
 
     let data = [
-        TamagochiData(name: "따끔따끔 다마고치", iamgeName: "1-6"),
-        TamagochiData(name: "방싱방실 다마고치", iamgeName: "2-6"),
-        TamagochiData(name: "반짝반짝 다마고치", iamgeName: "3-6"),
+        TamagochiData(name: "따끔따끔 다마고치", iamgeName: "1-6", description: "저는 따끔따끔 다마고치치"),
+        TamagochiData(name: "방싱방실 다마고치", iamgeName: "2-6", description: "저는 방실방실 다마고치입니당 키는 100km 몸무게는 150톤이에용 성격은 화끈하고 날라다닙니당~! 열심히 잘 먹고 잘 클 자신은 있답니다 방실방실!"),
+        TamagochiData(name: "반짝반짝 다마고치", iamgeName: "3-6", description: "저는 따끔따끔 다마고치치"),
         TamagochiData(name: "준비중이에요", iamgeName: "noImage"),
         TamagochiData(name: "준비중이에요", iamgeName: "noImage"),
         TamagochiData(name: "준비중이에요", iamgeName: "noImage"),
@@ -56,6 +56,17 @@ final class CreateCharacterViewController: UIViewController {
                 cellType: CharacterCollectionViewCell.self)
             ) { row, model, cell in
                 cell.configure(ImageName: model.iamgeName, characterName: model.name)
+            }
+            .disposed(by: disposeBag)
+
+        rootView.collectionView.rx.modelSelected(TamagochiData.self)
+            .bind(with: self) { owner, value in
+                let nextVC = CreateCharacterPopUpViewController()
+                nextVC.configure(data: value)
+                nextVC.modalPresentationStyle = .overFullScreen
+                nextVC.modalTransitionStyle = .crossDissolve
+
+                owner.present(nextVC, animated: true)
             }
             .disposed(by: disposeBag)
     }
