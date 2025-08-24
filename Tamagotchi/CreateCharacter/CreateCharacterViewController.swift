@@ -71,10 +71,16 @@ final class CreateCharacterViewController: UIViewController {
                 
                 popup.startButtonTapped
                     .bind(with: self) { owner, data in
-                        UserDefaults.standard.saveTamagochi(data)
-
                         let mainVC = MainViewController()
-                        mainVC.configure(data: data)
+                        if var savedData = UserDefaults.standard.loadTamagochi() {
+                            savedData.id = data.id
+                            UserDefaults.standard.saveTamagochi(savedData)
+                            mainVC.configure(data: savedData)
+                        } else {
+                            UserDefaults.standard.saveTamagochi(data)
+                            mainVC.configure(data: data)
+                        }
+                        
                         owner.navigationController?.pushViewController(mainVC, animated: true)
                     }
                     .disposed(by: owner.disposeBag)
