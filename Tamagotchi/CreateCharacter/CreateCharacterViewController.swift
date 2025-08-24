@@ -71,6 +71,8 @@ final class CreateCharacterViewController: UIViewController {
                 
                 popup.startButtonTapped
                     .bind(with: self) { owner, data in
+                        UserDefaults.standard.saveTamagochi(data)
+
                         let mainVC = MainViewController()
                         mainVC.configure(data: data)
                         owner.navigationController?.pushViewController(mainVC, animated: true)

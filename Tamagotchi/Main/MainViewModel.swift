@@ -10,18 +10,22 @@ import RxSwift
 import RxCocoa
 
 struct MainViewModel {
-    let disposeBag = DisposeBag()
-
-    struct Input {
-    }
-
-    struct Output {
-    }
-
-    init() {}
-
-    func transform(input: Input) -> Output {
-
-        return Output()
-    }
+//    let disposeBag = DisposeBag()
+//
+//    struct Input {
+//        let riceButtonTapped: ControlEvent<Void>
+//        let waterButtonTapped: ControlEvent<Void>
+//    }
+//
+//    struct Output {
+//        let updateData: PublishRelay<TamagochiData>
+//    }
+//
+//    init() {}
+//
+//    func transform(input: Input) -> Output {
+//		
+//
+//        return Output(updateData: )
+//    }
 }

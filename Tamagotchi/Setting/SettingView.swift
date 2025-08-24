@@ -6,15 +6,28 @@
 //
 
 import UIKit
+import SnapKit
 
-class SettingView: UIView {
+class SettingView: BaseView {
+    let tableView: UITableView = {
+        let tv = UITableView(frame: .zero, style: .plain)
+        tv.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tv.backgroundColor = .tamagochiBackground
+        return tv
+    }()
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    override func configureHierarchy() {
+        addSubview(tableView)
     }
-    */
+
+    override func configureLayout() {
+        tableView.snp.makeConstraints { make in
+            make.edges.equalTo(safeAreaLayoutGuide)
+        }
+    }
+
+    override func configureView() {
+        super.configureView()
+    }
 
 }

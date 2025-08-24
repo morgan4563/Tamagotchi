@@ -5,7 +5,7 @@
 //  Created by hyunMac on 8/24/25.
 //
 
-struct TamagochiData {
+struct TamagochiData: Codable {
     var id: Int
     let name: String
     var iamgeName: String

@@ -17,7 +17,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
 
-        let rootVC = UINavigationController(rootViewController: CreateCharacterViewController())
+        let rootVC: UIViewController
+        if let savedData = UserDefaults.standard.loadTamagochi() {
+            let mainVC = MainViewController()
+            mainVC.configure(data: savedData)
+            rootVC = UINavigationController(rootViewController: mainVC)
+        } else {
+            rootVC = UINavigationController(rootViewController: CreateCharacterViewController())
+        }
 
         window?.rootViewController = rootVC
         window?.makeKeyAndVisible()

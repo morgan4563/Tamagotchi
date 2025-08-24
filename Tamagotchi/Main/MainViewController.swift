@@ -54,6 +54,7 @@ class MainViewController: UIViewController {
                 }
                 data.rice += count
                 owner.currentData = data
+                UserDefaults.standard.saveTamagochi(owner.currentData!)
 
                 owner.updateStandartMessage()
                 owner.updateLv()
@@ -77,11 +78,19 @@ class MainViewController: UIViewController {
                 }
                 data.water += count
                 owner.currentData = data
+                UserDefaults.standard.saveTamagochi(owner.currentData!)
 
                 owner.updateStandartMessage()
                 owner.updateLv()
                 owner.updateImage()
                 owner.updateStatusLabel()
+            }
+            .disposed(by: disposeBag)
+
+        navigationItem.rightBarButtonItem?.rx.tap
+            .bind(with: self) { owner, _ in
+                let settingVC = SettingViewController()
+                owner.navigationController?.pushViewController(settingVC, animated: true)
             }
             .disposed(by: disposeBag)
     }
@@ -124,5 +133,15 @@ class MainViewController: UIViewController {
 
     func configureNavigation() {
         navigationItem.title = "\(currentData?.owner ?? "")님의 다마고치"
+        navigationItem.hidesBackButton = true
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "person.circle"),
+            style: .plain,
+            target: nil,
+            action: nil
+        )
+        navigationItem.rightBarButtonItem?.tintColor = .tamagochiLine
+        navigationItem.backButtonDisplayMode = .minimal
     }
 }
