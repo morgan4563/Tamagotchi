@@ -26,7 +26,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             rootVC = UINavigationController(rootViewController: CreateCharacterViewController())
         }
 
-        window?.rootViewController = rootVC
+        let tabBar = UITabBarController()
+
+        rootVC.tabBarItem = UITabBarItem(title: "다마고치", image: UIImage(systemName: "cricket.ball.fill"), tag: 0)
+
+        let boxOfficeVC = BoxOfficeViewController()
+        boxOfficeVC.tabBarItem = UITabBarItem(title: "박스오피스", image: UIImage(systemName: "popcorn"), tag: 1)
+
+		let LottoVC = LottoViewController()
+        LottoVC.tabBarItem = UITabBarItem(title: "로또", image: UIImage(systemName: "ticket"), tag: 2)
+
+        tabBar.viewControllers = [rootVC,boxOfficeVC,LottoVC]
+
+        window?.rootViewController = tabBar
         window?.makeKeyAndVisible()
     }
 

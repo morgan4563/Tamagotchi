@@ -10,6 +10,7 @@
 		922C14872E59A0BC004A502A /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 922C14862E59A0BC004A502A /* RxCocoa */; };
 		922C14892E59A0BC004A502A /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 922C14882E59A0BC004A502A /* RxSwift */; };
 		922C148C2E59A0D4004A502A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 922C148B2E59A0D4004A502A /* SnapKit */; };
+		922C18092E5C9B48004A502A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 922C18082E5C9B48004A502A /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -17,7 +18,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		922C147F2E599F19004A502A /* Exceptions for "Tamagotchi" folder in "Tamagotchi" target */ = {
+		922C18062E5C9AD1004A502A /* Exceptions for "Tamagotchi" folder in "Tamagotchi" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -30,7 +31,7 @@
 		922C146F2E599F17004A502A /* Tamagotchi */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				922C147F2E599F19004A502A /* Exceptions for "Tamagotchi" folder in "Tamagotchi" target */,
+				922C18062E5C9AD1004A502A /* Exceptions for "Tamagotchi" folder in "Tamagotchi" target */,
 			);
 			path = Tamagotchi;
 			sourceTree = "<group>";
@@ -43,6 +44,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				922C148C2E59A0D4004A502A /* SnapKit in Frameworks */,
+				922C18092E5C9B48004A502A /* Alamofire in Frameworks */,
 				922C14892E59A0BC004A502A /* RxSwift in Frameworks */,
 				922C14872E59A0BC004A502A /* RxCocoa in Frameworks */,
 			);
@@ -90,6 +92,7 @@
 				922C14862E59A0BC004A502A /* RxCocoa */,
 				922C14882E59A0BC004A502A /* RxSwift */,
 				922C148B2E59A0D4004A502A /* SnapKit */,
+				922C18082E5C9B48004A502A /* Alamofire */,
 			);
 			productName = Tamagotchi;
 			productReference = 922C146D2E599F17004A502A /* Tamagotchi.app */;
@@ -122,6 +125,7 @@
 			packageReferences = (
 				922C14852E59A0BC004A502A /* XCRemoteSwiftPackageReference "RxSwift" */,
 				922C148A2E59A0D4004A502A /* XCRemoteSwiftPackageReference "SnapKit" */,
+				922C18072E5C9B48004A502A /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 922C146E2E599F17004A502A /* Products */;
@@ -367,6 +371,14 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		922C18072E5C9B48004A502A /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -384,6 +396,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 922C148A2E59A0D4004A502A /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		922C18082E5C9B48004A502A /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 922C18072E5C9B48004A502A /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
