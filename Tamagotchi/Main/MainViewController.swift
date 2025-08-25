@@ -119,8 +119,9 @@ class MainViewController: UIViewController {
     }
 
     private func updateImage() {
-        guard let data = currentData, data.lv < 10 else { return }
-        let newImageString = "\(data.id)-\(data.lv)"
+        guard let data = currentData, data.lv <= 10 else { return }
+        let lv = min(9,data.lv)
+        let newImageString = "\(data.id)-\(lv)"
         currentData?.iamgeName = newImageString
         rootView.characterImage.image = UIImage(named: newImageString)
     }
