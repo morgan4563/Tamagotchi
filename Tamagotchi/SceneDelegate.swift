@@ -30,7 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         rootVC.tabBarItem = UITabBarItem(title: "다마고치", image: UIImage(systemName: "cricket.ball.fill"), tag: 0)
 
-        let boxOfficeVC = BoxOfficeViewController()
+        let boxOfficeVC = UINavigationController(rootViewController: BoxOfficeViewController())
         boxOfficeVC.tabBarItem = UITabBarItem(title: "박스오피스", image: UIImage(systemName: "popcorn"), tag: 1)
 
 		let LottoVC = LottoViewController()

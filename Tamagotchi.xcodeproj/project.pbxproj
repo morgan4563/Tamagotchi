@@ -11,10 +11,12 @@
 		922C14892E59A0BC004A502A /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 922C14882E59A0BC004A502A /* RxSwift */; };
 		922C148C2E59A0D4004A502A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 922C148B2E59A0D4004A502A /* SnapKit */; };
 		922C18092E5C9B48004A502A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 922C18082E5C9B48004A502A /* Alamofire */; };
+		922C19542E5CAC1B004A502A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 922C19532E5CAC1B004A502A /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		922C146D2E599F17004A502A /* Tamagotchi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tamagotchi.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		922C19532E5CAC1B004A502A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -56,6 +58,7 @@
 		922C14642E599F17004A502A = {
 			isa = PBXGroup;
 			children = (
+				922C19532E5CAC1B004A502A /* .gitignore */,
 				922C146F2E599F17004A502A /* Tamagotchi */,
 				922C146E2E599F17004A502A /* Products */,
 			);
@@ -142,6 +145,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				922C19542E5CAC1B004A502A /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
