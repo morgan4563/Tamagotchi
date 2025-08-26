@@ -44,5 +44,15 @@ class LottoViewController: UIViewController {
                 print("onDisposed")
             }
             .disposed(by: disposeBag)
+
+        output.showAlert
+            .bind(with: self) { owner, _ in
+                let alertController = UIAlertController(title: "에러발생", message: "올바른 값을 입력해주세요", preferredStyle: .alert)
+                let action = UIAlertAction(title: "OK", style: .default)
+                alertController.addAction(action)
+                owner.present(alertController, animated: true)
+                owner.rootView.numberTextField.text = ""
+            }
+            .disposed(by: disposeBag)
     }
 }

@@ -24,17 +24,23 @@ enum SampleError: Error {
 }
 
 final class CustomObservable {
-    static func getLotto(query: String) -> Observable<Lotto> {
-        return Observable<Lotto>.create { observer in
+
+
+    static func getLotto(query: String) -> Observable<Result<Lotto,SampleError>> {
+        return Observable<Result<Lotto,SampleError>>.create { observer in
             let url = "https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=\(query)"
             print(url)
             AF.request(url).responseDecodable(of: Lotto.self) { response in
                 switch response.result {
                 case .success(let value):
-                    observer.onNext(value)
+                    observer.onNext(.success(value))
                     observer.onCompleted()
                 case .failure(_):
-                    observer.onError(SampleError.sampleError)
+                    observer.onNext(.failure(SampleError.sampleError))
+                    observer.onCompleted()
+//                    observer.onError(SampleError.sampleError)
+                    //onError쓰면 메모리 정리되면서 부모까지 사용안됨.
+                    //onNext로 Result타입 던져서 위에서 처리
                 }
             }
             return Disposables.create()

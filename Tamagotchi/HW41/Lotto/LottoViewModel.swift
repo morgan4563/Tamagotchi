@@ -19,22 +19,32 @@ final class LottoViewModel {
 
     struct Output {
         let lotto: PublishSubject<Lotto>
+        let showAlert: PublishRelay<Void>
     }
 
     func transform(input: Input) -> Output {
         let lotto = PublishSubject<Lotto>()
+        let showAlert = PublishRelay<Void>()
 
         input.searchButtonTap
             .withLatestFrom(input.searchText)
             .flatMap { text in
                 CustomObservable.getLotto(query: text)
+                //TODO: 0828 질문 1-2. 내부에서는 success만 나올건데 catch 왜 쓰는지.
                     .catch { _ in
-                        Observable.never()
+                        return Observable.never()
                     }
             }
-            .bind(to: lotto)
+            .bind(with: self) { owner, response in
+                switch response {
+                case .success(let value):
+                    lotto.onNext(value)
+                case .failure(_):
+                    showAlert.accept(())
+                }
+            }
             .disposed(by: disposeBag)
 
-        return Output(lotto: lotto)
+        return Output(lotto: lotto, showAlert: showAlert)
     }
 }

@@ -28,13 +28,10 @@ class BoxOfficeViewController: UIViewController {
     }
 
     func bind() {
+        //TODO: 0828 질문 2. debounce 이야기 해주셨는데. 지금처럼 버튼 클릭으로 진행 할 떄는 withLatestFrom 으로 텍스트를 받아와서 필요 없지 않을까 고민.
 //        rootView.searchBar.rx.text.orEmpty
-//            .debounce(<#T##dueTime: RxTimeInterval##RxTimeInterval#>, scheduler: <#T##any SchedulerType#>)
+//            .debounce(.milliseconds(400), scheduler: MainScheduler.instance)
 //            .distinctUntilChanged()
-//            .bind(with: <#T##AnyObject#>) { <#AnyObject#>, <#String#> in
-//                <#code#>
-//            }
-
 
         let input = BoxOfficeViewModel.Input(searchTap: rootView.searchBar.rx.searchButtonClicked, searchText: rootView.searchBar.rx.text.orEmpty)
 
@@ -49,7 +46,11 @@ class BoxOfficeViewController: UIViewController {
 
         output.showAlert
             .bind(with: self) { owner, _ in
-                print("에러 발생 Alert")
+                let alertController = UIAlertController(title: "에러발생", message: "올바른 값을 입력해주세요", preferredStyle: .alert)
+                let action = UIAlertAction(title: "OK", style: .default)
+                alertController.addAction(action)
+                owner.present(alertController, animated: true)
+                owner.rootView.searchBar.text = ""
             }
             .disposed(by: disposeBag)
     }
