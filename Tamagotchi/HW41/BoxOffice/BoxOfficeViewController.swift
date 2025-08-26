@@ -28,6 +28,14 @@ class BoxOfficeViewController: UIViewController {
     }
 
     func bind() {
+//        rootView.searchBar.rx.text.orEmpty
+//            .debounce(<#T##dueTime: RxTimeInterval##RxTimeInterval#>, scheduler: <#T##any SchedulerType#>)
+//            .distinctUntilChanged()
+//            .bind(with: <#T##AnyObject#>) { <#AnyObject#>, <#String#> in
+//                <#code#>
+//            }
+
+
         let input = BoxOfficeViewModel.Input(searchTap: rootView.searchBar.rx.searchButtonClicked, searchText: rootView.searchBar.rx.text.orEmpty)
 
         let output = viewModel.transform(input: input)
@@ -36,6 +44,12 @@ class BoxOfficeViewController: UIViewController {
             .bind(to: rootView.tableView.rx.items(cellIdentifier: BoxOfficeTableViewCell.identifier, cellType: BoxOfficeTableViewCell.self)) {row, element, cell in
                 let text = "랭크: \(element.rank), 제목: \(element.movieNm)"
                 cell.movieNameLabel.text = text
+            }
+            .disposed(by: disposeBag)
+
+        output.showAlert
+            .bind(with: self) { owner, _ in
+                print("에러 발생 Alert")
             }
             .disposed(by: disposeBag)
     }
