@@ -41,18 +41,20 @@ final class CreateCharacterViewController: UIViewController {
             }
             .disposed(by: disposeBag)
 
-        output.presentPopUp
-            .bind(with: self) { owner, nextVC in
-                guard let popup = nextVC as? CreateCharacterPopUpViewController else { return }
-                
-                popup.startButtonTapped
+        output.selectedTamaData
+            .bind(with: self) { owner, tamaData in
+                let nextVC = CreateCharacterPopUpViewController(currentData: tamaData)
+                nextVC.modalPresentationStyle = .overFullScreen
+                nextVC.modalTransitionStyle = .crossDissolve
+
+                nextVC.startButtonTapped
                     .bind(with: self) { owner, data in
                         let mainVC = MainViewController()
                         if var savedData = UserDefaults.standard.loadTamagochi() {
                             savedData.id = data.id
                             savedData.name = data.name
                             UserDefaults.standard.saveTamagochi(savedData)
-                            #warning("외부에서 컨피규어 ㄴㄴ, 들어가서 유저디폴트로 변경하지")
+							#warning("외부에서 컨피규어 ㄴㄴ, 들어가서 유저디폴트로 변경하지")
                             mainVC.configure(data: savedData)
                         } else {
                             UserDefaults.standard.saveTamagochi(data)
@@ -62,8 +64,7 @@ final class CreateCharacterViewController: UIViewController {
                         owner.navigationController?.pushViewController(mainVC, animated: true)
                     }
                     .disposed(by: owner.disposeBag)
-
-                owner.present(popup, animated: true)
+                owner.present(nextVC, animated: true)
             }
             .disposed(by: disposeBag)
     }

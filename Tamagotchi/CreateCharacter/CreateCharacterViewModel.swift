@@ -8,7 +8,6 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import UIKit
 
 final class CreateCharacterViewModel {
     private let disposeBag = DisposeBag()
@@ -41,7 +40,7 @@ final class CreateCharacterViewModel {
     }
 
     struct Output {
-        let presentPopUp: PublishRelay<UIViewController>
+        let selectedTamaData: PublishRelay<TamagochiData>
         let item: BehaviorRelay<[TamagochiData]>
     }
 
@@ -50,7 +49,7 @@ final class CreateCharacterViewModel {
     }
 
     func transform(input: Input) -> Output {
-		let vc = PublishRelay<UIViewController>()
+		let selectedTamaData = PublishRelay<TamagochiData>()
         let item = BehaviorRelay<[TamagochiData]>(value: data)
 
         input.itemSelected
@@ -62,16 +61,12 @@ final class CreateCharacterViewModel {
                 tama.imageName = value.imageName
                 tama.name = value.name
 
-                let nextVC = CreateCharacterPopUpViewController(currentData: tama)
-                nextVC.modalPresentationStyle = .overFullScreen
-                nextVC.modalTransitionStyle = .crossDissolve
-
-                vc.accept(nextVC)
+                selectedTamaData.accept(tama)
             }
             .disposed(by: disposeBag)
 
         return Output(
-            presentPopUp: vc,
+            selectedTamaData: selectedTamaData,
             item: item
         )
     }

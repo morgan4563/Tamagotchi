@@ -19,7 +19,6 @@ class MainViewController: UIViewController {
         view = rootView
     }
 
-    //TODO: 0828 질문 3. viewWaillAppear는 Rx Input으로 어떻게 넣는가
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print(#function)
