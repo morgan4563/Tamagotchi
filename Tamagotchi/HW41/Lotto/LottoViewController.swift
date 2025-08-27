@@ -10,6 +10,7 @@ import SnapKit
 import Alamofire
 import RxSwift
 import RxCocoa
+import Toast
 
 class LottoViewController: UIViewController {
     private let rootView = LottoView()
@@ -47,12 +48,19 @@ class LottoViewController: UIViewController {
 
         output.showAlert
             .bind(with: self) { owner, _ in
-                let alertController = UIAlertController(title: "에러발생", message: "올바른 값을 입력해주세요", preferredStyle: .alert)
-                let action = UIAlertAction(title: "OK", style: .default)
-                alertController.addAction(action)
-                owner.present(alertController, animated: true)
+                owner.rootView.makeToast("통신실패 올바른 값 입력 확인필요")
                 owner.rootView.numberTextField.text = ""
             }
             .disposed(by: disposeBag)
+
+        output.networkDisconnected
+            .drive(with: self) { owner, _ in
+                let alertController = UIAlertController(title: "네트워크에러발생", message: "네트워크 단절 발생했습니다.", preferredStyle: .alert)
+                let action = UIAlertAction(title: "OK", style: .default)
+                alertController.addAction(action)
+                owner.present(alertController, animated: true)
+            }
+            .disposed(by: disposeBag)
+
     }
 }

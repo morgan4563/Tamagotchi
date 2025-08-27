@@ -12,6 +12,7 @@
 		922C148C2E59A0D4004A502A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 922C148B2E59A0D4004A502A /* SnapKit */; };
 		922C18092E5C9B48004A502A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 922C18082E5C9B48004A502A /* Alamofire */; };
 		922C19542E5CAC1B004A502A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 922C19532E5CAC1B004A502A /* .gitignore */; };
+		922C1AB92E5E804B004A502A /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 922C1AB82E5E804B004A502A /* Toast */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 				922C148C2E59A0D4004A502A /* SnapKit in Frameworks */,
 				922C18092E5C9B48004A502A /* Alamofire in Frameworks */,
 				922C14892E59A0BC004A502A /* RxSwift in Frameworks */,
+				922C1AB92E5E804B004A502A /* Toast in Frameworks */,
 				922C14872E59A0BC004A502A /* RxCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -96,6 +98,7 @@
 				922C14882E59A0BC004A502A /* RxSwift */,
 				922C148B2E59A0D4004A502A /* SnapKit */,
 				922C18082E5C9B48004A502A /* Alamofire */,
+				922C1AB82E5E804B004A502A /* Toast */,
 			);
 			productName = Tamagotchi;
 			productReference = 922C146D2E599F17004A502A /* Tamagotchi.app */;
@@ -129,6 +132,7 @@
 				922C14852E59A0BC004A502A /* XCRemoteSwiftPackageReference "RxSwift" */,
 				922C148A2E59A0D4004A502A /* XCRemoteSwiftPackageReference "SnapKit" */,
 				922C18072E5C9B48004A502A /* XCRemoteSwiftPackageReference "Alamofire" */,
+				922C1AB72E5E804B004A502A /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 922C146E2E599F17004A502A /* Products */;
@@ -169,6 +173,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SGTR4U32N5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tamagotchi/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -196,6 +201,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SGTR4U32N5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tamagotchi/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -383,6 +389,14 @@
 				minimumVersion = 5.10.2;
 			};
 		};
+		922C1AB72E5E804B004A502A /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -405,6 +419,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 922C18072E5C9B48004A502A /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		922C1AB82E5E804B004A502A /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 922C1AB72E5E804B004A502A /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

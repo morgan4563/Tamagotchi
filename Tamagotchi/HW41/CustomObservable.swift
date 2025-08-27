@@ -21,11 +21,10 @@ struct Lotto: Codable {
 
 enum SampleError: Error {
     case sampleError
+    case networkError
 }
 
 final class CustomObservable {
-
-
     static func getLotto(query: String) -> Observable<Result<Lotto,SampleError>> {
         return Observable<Result<Lotto,SampleError>>.create { observer in
             let url = "https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=\(query)"
