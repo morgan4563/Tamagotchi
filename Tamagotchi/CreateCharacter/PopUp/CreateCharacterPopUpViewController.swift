@@ -9,12 +9,21 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class CreateCharacterPopUpViewController: UIViewController {
-    let rootView = CreateCharacterPopUpView()
-    let disposeBag = DisposeBag()
+final class CreateCharacterPopUpViewController: UIViewController {
+    private let rootView = CreateCharacterPopUpView()
+    private let disposeBag = DisposeBag()
     let startButtonTapped = PublishRelay<TamagochiData>()
-    var currentData: TamagochiData?
+    private var currentData: TamagochiData
 
+    init(currentData: TamagochiData) {
+        self.currentData = currentData
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     deinit {
         print("CreateCharacterPopUpViewController deinit")
     }
@@ -25,6 +34,7 @@ class CreateCharacterPopUpViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureView()
 		bind()
     }
 
@@ -37,16 +47,15 @@ class CreateCharacterPopUpViewController: UIViewController {
 
         rootView.startButton.rx.tap
             .bind(with: self) { owner, _ in
-                owner.startButtonTapped.accept(owner.currentData ?? TamagochiData(name: "", iamgeName: ""))
+                owner.startButtonTapped.accept(owner.currentData)
                 owner.dismiss(animated: true)
             }
             .disposed(by: disposeBag)
     }
 
-    func configure(data: TamagochiData) {
-        rootView.imageView.image = UIImage(named: data.iamgeName)
-        rootView.nameLabel.text = data.name
-        rootView.descriptionLabel.text = data.description
-        self.currentData = data
+    func configureView() {
+        rootView.imageView.image = UIImage(named: currentData.imageName)
+        rootView.nameLabel.text = currentData.name
+        rootView.descriptionLabel.text = currentData.description
     }
 }

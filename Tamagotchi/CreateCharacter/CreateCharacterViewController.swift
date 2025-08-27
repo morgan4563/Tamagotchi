@@ -10,60 +10,36 @@ import RxSwift
 import RxCocoa
 
 final class CreateCharacterViewController: UIViewController {
-    let disposeBag = DisposeBag()
-    let rootView = CreateCharacterView()
-    let viewModel = CreateCharacterViewModel()
+    private let disposeBag = DisposeBag()
+    private let rootView = CreateCharacterView()
+    private let viewModel = CreateCharacterViewModel()
 
     override func loadView() {
         view = rootView
     }
 
-    let data = [
-        TamagochiData(id: 1, name: "따끔따끔 다마고치", iamgeName: "1-6", description: "저는 따끔따끔 다마고치치"),
-        TamagochiData(id: 2, name: "방싱방실 다마고치", iamgeName: "2-6", description: "저는 방실방실 다마고치입니당 키는 100km 몸무게는 150톤이에용 성격은 화끈하고 날라다닙니당~! 열심히 잘 먹고 잘 클 자신은 있답니다 방실방실!"),
-        TamagochiData(id: 3, name: "반짝반짝 다마고치", iamgeName: "3-6", description: "저는 반짝반짝 다마고치치입니다."),
-        TamagochiData(name: "준비중이에요", iamgeName: "noImage"),
-        TamagochiData(name: "준비중이에요", iamgeName: "noImage"),
-        TamagochiData(name: "준비중이에요", iamgeName: "noImage"),
-        TamagochiData(name: "준비중이에요", iamgeName: "noImage"),
-        TamagochiData(name: "준비중이에요", iamgeName: "noImage"),
-        TamagochiData(name: "준비중이에요", iamgeName: "noImage"),
-        TamagochiData(name: "준비중이에요", iamgeName: "noImage"),
-        TamagochiData(name: "준비중이에요", iamgeName: "noImage"),
-        TamagochiData(name: "준비중이에요", iamgeName: "noImage"),
-        TamagochiData(name: "준비중이에요", iamgeName: "noImage"),
-        TamagochiData(name: "준비중이에요", iamgeName: "noImage"),
-        TamagochiData(name: "준비중이에요", iamgeName: "noImage"),
-        TamagochiData(name: "준비중이에요", iamgeName: "noImage"),
-        TamagochiData(name: "준비중이에요", iamgeName: "noImage"),
-        TamagochiData(name: "준비중이에요", iamgeName: "noImage"),
-        TamagochiData(name: "준비중이에요", iamgeName: "noImage"),
-        TamagochiData(name: "준비중이에요", iamgeName: "noImage"),
-    ]
-
-    lazy var items = BehaviorSubject(value: data)
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
         bind()
         navigationItem.title = "다마고치 선택하기"
     }
 
     private func bind() {
-        let input = CreateCharacterViewModel.Input(itemSelected: rootView.collectionView.rx.modelSelected(TamagochiData.self))
+        let input = CreateCharacterViewModel.Input(
+            viewDidLoad: Observable<Void>.just(()),
+            itemSelected: rootView.collectionView.rx.modelSelected(TamagochiData.self)
+        )
 
         let output = viewModel.transform(input: input)
 
-        items
+        output.item
             .bind(to: rootView.collectionView.rx.items(
                 cellIdentifier: CharacterCollectionViewCell.identifier,
                 cellType: CharacterCollectionViewCell.self)
             ) { row, model, cell in
-                cell.configure(ImageName: model.iamgeName, characterName: model.name)
+                cell.configure(ImageName: model.imageName, characterName: model.name)
             }
             .disposed(by: disposeBag)
-
 
         output.presentPopUp
             .bind(with: self) { owner, nextVC in
@@ -76,6 +52,7 @@ final class CreateCharacterViewController: UIViewController {
                             savedData.id = data.id
                             savedData.name = data.name
                             UserDefaults.standard.saveTamagochi(savedData)
+                            #warning("외부에서 컨피규어 ㄴㄴ, 들어가서 유저디폴트로 변경하지")
                             mainVC.configure(data: savedData)
                         } else {
                             UserDefaults.standard.saveTamagochi(data)

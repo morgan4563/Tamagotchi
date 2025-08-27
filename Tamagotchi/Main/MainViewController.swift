@@ -35,7 +35,7 @@ class MainViewController: UIViewController {
     func configure(data: TamagochiData) {
     	currentData = data
         rootView.nameLabel.text = data.name
-        rootView.characterImage.image = UIImage(named: data.iamgeName)
+        rootView.characterImage.image = UIImage(named: data.imageName)
     }
 
     private func bind() {

@@ -25,8 +25,8 @@ enum SampleError: Error {
 }
 
 final class CustomObservable {
-    static func getLotto(query: String) -> Observable<Result<Lotto,SampleError>> {
-        return Observable<Result<Lotto,SampleError>>.create { observer in
+    static func getLotto(query: String) -> Observable<Result<Lotto,AFError>> {
+        return Observable<Result<Lotto,AFError>>.create { observer in
             let url = "https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=\(query)"
             print(url)
             AF.request(url).responseDecodable(of: Lotto.self) { response in
@@ -34,8 +34,8 @@ final class CustomObservable {
                 case .success(let value):
                     observer.onNext(.success(value))
                     observer.onCompleted()
-                case .failure(_):
-                    observer.onNext(.failure(SampleError.sampleError))
+                case .failure(let error):
+                    observer.onNext(.failure(error))
                     observer.onCompleted()
 //                    observer.onError(SampleError.sampleError)
                     //onError쓰면 메모리 정리되면서 부모까지 사용안됨.

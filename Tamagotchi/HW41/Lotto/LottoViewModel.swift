@@ -13,8 +13,8 @@ import Network
 final class LottoViewModel {
 	let disposeBag = DisposeBag()
 
-    let monitor = NWPathMonitor()
-    let monitorQueue = DispatchQueue(label: "NetworkMonitor")
+//    let monitor = NWPathMonitor()
+//    let monitorQueue = DispatchQueue(label: "NetworkMonitor")
 
     struct Input {
         let searchButtonTap: ControlEvent<Void>
@@ -32,13 +32,13 @@ final class LottoViewModel {
         let showAlert = PublishRelay<Void>()
         let networkDisconnected = PublishRelay<Void>()
         
-        monitor.pathUpdateHandler = { path in
-            if path.status != .satisfied {
-                networkDisconnected.accept(())
-            }
-        }
-
-        monitor.start(queue: monitorQueue)
+//        monitor.pathUpdateHandler = { path in
+//            if path.status != .satisfied {
+//                networkDisconnected.accept(())
+//            }
+//        }
+//
+//        monitor.start(queue: monitorQueue)
 
         input.searchButtonTap
             .withLatestFrom(input.searchText)
@@ -54,7 +54,8 @@ final class LottoViewModel {
                 switch response {
                 case .success(let value):
                     lotto.onNext(value)
-                case .failure(_):
+                case .failure(let error):
+                    print(error)
                     showAlert.accept(())
                 }
             }
@@ -67,5 +68,5 @@ final class LottoViewModel {
         )
     }
 
-    deinit { monitor.cancel() }
+//    deinit { monitor.cancel() }
 }

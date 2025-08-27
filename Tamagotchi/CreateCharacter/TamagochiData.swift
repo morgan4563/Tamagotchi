@@ -8,7 +8,7 @@
 struct TamagochiData: Codable {
     var id: Int
     var name: String
-    var iamgeName: String
+    var imageName: String
     let description: String
     var owner: String
     var lv: Int
@@ -27,11 +27,27 @@ struct TamagochiData: Codable {
     ) {
         self.id = id
         self.name = name
-        self.iamgeName = iamgeName
+        self.imageName = iamgeName
         self.description = description
         self.owner = owner
         self.lv = lv
         self.rice = rice
         self.water = water
+    }
+
+    var lvDescription: Int {
+        let score = (Double(rice) / 5.0) + (Double(water) / 2.0)
+        let rawLv = Int(score / 10.0)
+        let lv = max(1, min(10, rawLv))
+		return lv
+    }
+
+    var statusDescription: String {
+        return "LV\(lvDescription) • 밥알 \(rice) • 물방울 \(water)"
+    }
+
+    var imageDescroption: String {
+        let maxLv = min(9,lvDescription)
+        return "\(id)-\(maxLv)"
     }
 }

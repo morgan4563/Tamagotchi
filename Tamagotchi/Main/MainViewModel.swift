@@ -41,7 +41,7 @@ struct MainViewModel {
         //MARK: 초기값 있으면 주기
         if let data = try? currentData.value() {
             statusText.accept("LV\(data.lv) • 밥알 \(data.rice) • 물방울 \(data.water)")
-            imageName.accept(data.iamgeName)
+            imageName.accept(data.imageName)
             titleText.accept("\(data.owner)님의 다마고치")
             nameText.accept(data.name)
             bubbleMessage.accept("좋은 하루에요, \(data.owner)님")
