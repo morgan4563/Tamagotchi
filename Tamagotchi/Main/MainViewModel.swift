@@ -17,16 +17,16 @@ struct MainViewModel {
         let riceTextField: ControlProperty<String>
         let waterButtonTap: ControlEvent<Void>
         let waterTextField: ControlProperty<String>
-        let viewWillAppearObservable: Observable<Void>
+        let viewWillAppearObservable: PublishRelay<Void>
     }
 
     struct Output {
-        let bubbleMessage: BehaviorRelay<String>
-        let currentData: BehaviorSubject<TamagochiData?>
-        let statusText: BehaviorRelay<String>
-        let imageName: BehaviorRelay<String>
-        let titleText: BehaviorRelay<String>
-        let nameText: BehaviorRelay<String>
+        let bubbleMessage: Driver<String>
+        let currentData: Driver<TamagochiData?>
+        let statusText: Driver<String>
+        let imageName: Driver<String>
+        let titleText: Driver<String>
+        let nameText: Driver<String>
     }
 
     init() {}
@@ -143,16 +143,12 @@ struct MainViewModel {
             .disposed(by: disposeBag)
 
         return Output(
-            bubbleMessage: bubbleMessage,
-            currentData: currentData,
-            statusText: statusText,
-            imageName: imageName,
-            titleText: titleText,
-            nameText: nameText
+            bubbleMessage: bubbleMessage.asDriver(),
+            currentData: currentData.asDriver(onErrorJustReturn: nil),
+            statusText: statusText.asDriver(),
+            imageName: imageName.asDriver(),
+            titleText: titleText.asDriver(),
+            nameText: nameText.asDriver()
         )
-    }
-
-    private func refresh() {
-
     }
 }

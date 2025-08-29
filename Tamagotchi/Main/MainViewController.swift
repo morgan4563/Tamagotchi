@@ -33,7 +33,6 @@ class MainViewController: UIViewController {
 
     }
 
-    //MARK: 유니캐스트, 멀티캐스트.
     func configure(data: TamagochiData) {
     	currentData = data
         rootView.nameLabel.text = data.name
@@ -46,41 +45,41 @@ class MainViewController: UIViewController {
             riceTextField: rootView.riceTextField.rx.text.orEmpty,
             waterButtonTap: rootView.waterButton.rx.tap,
             waterTextField: rootView.waterTextField.rx.text.orEmpty,
-            viewWillAppearObservable: viewWillAppearRelay.asObservable()
+            viewWillAppearObservable: viewWillAppearRelay
         )
 
         let output = viewModel.transform(input: input)
 
         output.bubbleMessage
-            .bind(to: rootView.bubbleMessage.rx.text)
+            .drive(rootView.bubbleMessage.rx.text)
             .disposed(by: disposeBag)
 
         output.currentData
             .compactMap { $0 }
-            .bind(with: self) { owner, data in
+            .drive(with: self) { owner, data in
                 owner.configure(data: data)
                 owner.navigationItem.title = "\(data.owner)님의 다마고치"
             }
             .disposed(by: disposeBag)
 
         output.statusText
-            .bind(to: rootView.statusLabel.rx.text)
+            .drive(rootView.statusLabel.rx.text)
             .disposed(by: disposeBag)
 
         output.imageName
-            .bind(with: self) { owner, name in
+            .drive(with: self) { owner, name in
                 owner.rootView.characterImage.image = UIImage(named: name)
             }
             .disposed(by: disposeBag)
 
         output.titleText
-            .bind(with: self) { owner, title in
+            .drive(with: self) { owner, title in
                 owner.navigationItem.title = title
             }
             .disposed(by: disposeBag)
 
         output.nameText
-            .bind(with: self) { owner, name in
+            .drive(with: self) { owner, name in
                 owner.rootView.nameLabel.text = name
             }
             .disposed(by: disposeBag)
