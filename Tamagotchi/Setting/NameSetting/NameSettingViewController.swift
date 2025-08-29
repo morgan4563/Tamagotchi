@@ -8,10 +8,12 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Toast
 
 class NameSettingViewController: UIViewController {
-    private let disposeBag = DisposeBag()
     private let rootView = NameSettingView()
+    private let viewModel = NameSettingViewModel()
+    private let disposeBag = DisposeBag()
 
     override func loadView() {
         view = rootView
@@ -26,13 +28,21 @@ class NameSettingViewController: UIViewController {
     }
 
     private func bind() {
-        navigationItem.rightBarButtonItem?.rx.tap
-            .withLatestFrom(rootView.nameTextField.rx.text.orEmpty)
-            .bind(with: self) { owner, text in
-                guard var savedData = UserDefaults.standard.loadTamagochi() else { return }
-                savedData.owner = text
-                UserDefaults.standard.saveTamagochi(savedData)
+        let input = NameSettingViewModel.Input(
+            saveButtonTapped: navigationItem.rightBarButtonItem!.rx.tap,
+            nicknameTextField: rootView.nameTextField.rx.text.orEmpty
+        )
+        let output = viewModel.transform(input: input)
+
+        output.dismiss
+            .bind(with: self) { owner, _ in
                 owner.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+
+        output.makeToast
+            .bind(with: self) { owner, toastMessage in
+                owner.rootView.makeToast(toastMessage)
             }
             .disposed(by: disposeBag)
     }

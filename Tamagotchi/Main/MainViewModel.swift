@@ -39,9 +39,10 @@ struct MainViewModel {
         let titleText = BehaviorRelay<String>(value: "다마고치")
         let nameText = BehaviorRelay<String>(value: "다마고치")
 
-        //MARK: 초기값 있으면 주기
         input.viewWillAppearObservable
             .bind { _ in
+                currentData.onNext(UserDefaults.standard.loadTamagochi())
+
                 if let data = try? currentData.value() {
                     statusText.accept("LV\(data.lv) • 밥알 \(data.rice) • 물방울 \(data.water)")
                     imageName.accept(data.imageDescroption)

@@ -30,7 +30,6 @@ class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
         viewWillAppearRelay.accept(())
-
     }
 
     func configure(data: TamagochiData) {
