@@ -17,6 +17,7 @@ struct MainViewModel {
         let riceTextField: ControlProperty<String>
         let waterButtonTap: ControlEvent<Void>
         let waterTextField: ControlProperty<String>
+        let viewWillAppearObservable: Observable<Void>
     }
 
     struct Output {
@@ -39,13 +40,18 @@ struct MainViewModel {
         let nameText = BehaviorRelay<String>(value: "다마고치")
 
         //MARK: 초기값 있으면 주기
-        if let data = try? currentData.value() {
-            statusText.accept("LV\(data.lv) • 밥알 \(data.rice) • 물방울 \(data.water)")
-            imageName.accept(data.imageName)
-            titleText.accept("\(data.owner)님의 다마고치")
-            nameText.accept(data.name)
-            bubbleMessage.accept("좋은 하루에요, \(data.owner)님")
-        }
+        input.viewWillAppearObservable
+            .bind { _ in
+                if let data = try? currentData.value() {
+                    statusText.accept("LV\(data.lv) • 밥알 \(data.rice) • 물방울 \(data.water)")
+                    imageName.accept(data.imageDescroption)
+                    titleText.accept("\(data.owner)님의 다마고치")
+                    nameText.accept(data.name)
+                    bubbleMessage.accept("좋은 하루에요, \(data.owner)님")
+                    print("viewWillAppear 통해서 값 변경 진행됨")
+                }
+            }
+            .disposed(by: disposeBag)
 
         input.riceButtonTap
             .withLatestFrom(input.riceTextField)
@@ -144,5 +150,9 @@ struct MainViewModel {
             titleText: titleText,
             nameText: nameText
         )
+    }
+
+    private func refresh() {
+
     }
 }

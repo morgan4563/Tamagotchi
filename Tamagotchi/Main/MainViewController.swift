@@ -14,16 +14,12 @@ class MainViewController: UIViewController {
     let viewModel = MainViewModel()
     var currentData: TamagochiData?
     let disposeBag = DisposeBag()
+    let viewWillAppearRelay = PublishRelay<Void>()
 
     override func loadView() {
         view = rootView
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print(#function)
-    }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,6 +27,13 @@ class MainViewController: UIViewController {
         bind()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+        viewWillAppearRelay.accept(())
+
+    }
+
+    //MARK: 유니캐스트, 멀티캐스트.
     func configure(data: TamagochiData) {
     	currentData = data
         rootView.nameLabel.text = data.name
@@ -42,7 +45,8 @@ class MainViewController: UIViewController {
             riceButtonTap: rootView.riceButton.rx.tap,
             riceTextField: rootView.riceTextField.rx.text.orEmpty,
             waterButtonTap: rootView.waterButton.rx.tap,
-            waterTextField: rootView.waterTextField.rx.text.orEmpty
+            waterTextField: rootView.waterTextField.rx.text.orEmpty,
+            viewWillAppearObservable: viewWillAppearRelay.asObservable()
         )
 
         let output = viewModel.transform(input: input)
